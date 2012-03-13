@@ -1,0 +1,12 @@
+{
+  "name": "passport-forcedotom",
+  "version": "0.0.1",
+  "description": "ForceDotCom authentication strategy for Passport.",
+  "author": "Joshua Birk",
+  "main": "./lib/passport-forcedotcom",
+  "dependencies": {
+    "passport-oauth": ">= 0.1.2"
+  },
+  "engines": { "node": ">= 0.4.0" },
+  "keywords": ["passport", "ForceDotCom", "auth", "authn", "authentication", "identity"]
+}

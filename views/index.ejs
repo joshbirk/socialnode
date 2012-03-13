@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+
+<script src='/js/jquery-1.5.1.min.js'></script>
+<script src='/js/jquery.jqote2.min.js'></script>
+
+<script>
+var fdc_user = {{= fdc_user }};
+var fb_user = {{= fb_user }};
+var tw_user = {{= tw_user }};
+
+$(document).ready(
+		function() {
+		
+			if(fdc_user) {
+				$.getJSON('/fdc/json/services/data/v23.0/chatter/feeds/news/{{= fdc_user_id }}/feed-items',
+					function(data) {
+						$('#chatter').jqoteapp('#chatter_tmpl',data.items);					
+						});
+
+			}
+			//https://graph.facebook.com/me/home
+			if(fb_user) {
+				$.getJSON('/fb/json/me/home',
+					function(data) {
+						$('#facebook').jqoteapp('#facebook_tmpl',data.data);					
+						});
+			}
+			//statuses/home_timeline
+			if(tw_user) {
+				$.getJSON('/tw/json/1/statuses/home_timeline.json',
+					function(data) {
+						$('#twitter').jqoteapp('#twitter_tmpl',data.items);					
+						});
+			}
+			
+		}
+	);
+
+
+</script>
+
+</HEAD>
+<BODY>
+<h1>verysocial</h1>
+<a href="/login">Log into Force.com</a> {{= fdc_user }}| 
+<a href="/facebook-login">Log into Facebook</a> {{= fb_user }}| 
+<a href="/twitter-login">Log into Twitter</a> {{= tw_user }}
+<hr>
+<h2>Chatter</h2>
+<UL id='chatter'>
+	<script type="text/x-jqote-template" id="chatter_tmpl" >
+	<li><%= this.actor.name %>: <%= this.body.text %></li>
+	</script>
+</UL>
+<h2>Facebook</h2>
+<UL id="facebook">
+	<script type="text/x-jqote-template" id="facebook_tmpl" >
+	<li><%= this.from.name %>: <%= this.message %></li>
+	</script>
+</UL>
+<h2>Twitter</h2>
+<UL id="twitter">
+	<script type="text/x-jqote-template" id="twitter_tmpl" >
+	<li><%= this.actor.name %>: <%= this.body.text %></li>
+	</script>
+</UL>
+
+</BODY>
+</HTML>
